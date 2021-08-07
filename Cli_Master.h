@@ -13,6 +13,7 @@ class Cli_Master {
         vector<string> helpVector;
         map<string, string> programShortOptions;
         map<string, string> programLongOptions;
+        map<string, string> parsedFlags;
 
         // protected methods
         void printHelp();
@@ -71,7 +72,7 @@ void Cli_Master::option(string flag, string description, string defaultValue) {
     string shortStr = flag.substr(0, commaIndex);
     string longStr = flag.substr(commaIndex + 1);
     this->programShortOptions.insert(pair<string, string> (trim(shortStr), defaultValue));
-    this->programLongOptions.insert(pair<string, string> (trim(shortStr), defaultValue));
+    this->programLongOptions.insert(pair<string, string> (trim(longStr), defaultValue));
 }
 
 void Cli_Master::parse(int argc, char** argv) {
@@ -82,7 +83,24 @@ void Cli_Master::parse(int argc, char** argv) {
     // perform main logic here
     for(int i = 1; i < argc; i++) {
         string argument = *(argv + i);
+        int index = argument.find("=");
+        if(index == -1) {
+            /** No support for boolean based values yet */
+            // map<string, string>::iterator itr;
+            // for(itr = this->programLongOptions.begin(); itr != this->programLongOptions.end(); itr++) {
+            //     // println("Key: " + itr->first);
+            //     // println("Value: " + itr->second);
+            // }
+        } else {
+            string key = argument.substr(0, index);
+            string value = argument.substr(index + 1);
+            this->parsedFlags.insert(pair<string, string> (key, value));
+        }
     }
+}
+
+map<string, string> Cli_Master::opts() {
+    return this->parsedFlags;
 }
 
 #endif

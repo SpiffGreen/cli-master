@@ -10,5 +10,10 @@ int main(int argc, char** argv) {
     passgen.version("v1.0.0");
     passgen.option("-l, --length", "length of password", "8");
     passgen.parse(argc, argv);
+    auto m = passgen.opts();
+    map<string, string>::iterator itr;
+    for(itr = m.begin(); itr != m.end(); itr++) {
+        println("Key: " + itr->first + ", Value: " + itr->second);
+    }
     return 0;
 }
