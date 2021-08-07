@@ -71,8 +71,10 @@ void Cli_Master::option(string flag, string description, string defaultValue) {
     if(commaIndex == -1) throw "Flag should contain a short and long version";
     string shortStr = flag.substr(0, commaIndex);
     string longStr = flag.substr(commaIndex + 1);
-    this->programShortOptions.insert(pair<string, string> (trim(shortStr), defaultValue));
-    this->programLongOptions.insert(pair<string, string> (trim(longStr), defaultValue));
+    longStr = trim(longStr);
+    shortStr = trim(shortStr);
+    this->programShortOptions.insert(pair<string, string> (trim(shortStr, '-'), defaultValue));
+    this->programLongOptions.insert(pair<string, string> (trim(longStr, '-'), defaultValue));
 }
 
 void Cli_Master::parse(int argc, char** argv) {
@@ -94,7 +96,15 @@ void Cli_Master::parse(int argc, char** argv) {
         } else {
             string key = argument.substr(0, index);
             string value = argument.substr(index + 1);
-            this->parsedFlags.insert(pair<string, string> (key, value));
+            if(startsWith(key, "--")) {
+                // This means its a long flag
+                key = trim(key, '-');
+                map<string, string>::iterator m = this->programLongOptions.find(key);
+                // println(m->second); // Check if m exists before using it's value
+            } else {
+                // perform operation for short flag
+            }
+            this->parsedFlags.insert(pair<string, string> (trim(key, '-'), value));
         }
     }
 }

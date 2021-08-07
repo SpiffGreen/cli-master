@@ -14,9 +14,10 @@ template <typename T>
 void println(T);
 
 string input(string);
-string trimLeft(string);
-string trimRight(string str);
-string trim(string str);
+string trimLeft(string, char);
+string trimRight(string, char);
+string trim(string, char);
+bool startsWith(string, string);
 
 
 // Definitions
@@ -37,24 +38,29 @@ string input(string question) {
     return answer;
 }
 
-string trimLeft(string str) {
+string trimLeft(string str, char delimeter = ' ') {
     int i;
     for(i = 0; i < str.size(); i++) {
-        if(str[i] != ' ') break;
+        if(str[i] != delimeter) break;
     }
     return str.substr(i);
 }
 
-string trimRight(string str) {
+string trimRight(string str, char delimeter = ' ') {
     int i;
     for(i = str.size() - 1; i >= 0; i--) {
-        if(str[i] != ' ') break;
+        if(str[i] != delimeter) break;
     }
     return str.substr(0, i + 1);
 }
 
-string trim(string str) {
-    return trimLeft(trimRight(str));
+string trim(string str, char delimeter = ' ') {
+    return trimLeft(trimRight(str, delimeter), delimeter);
+}
+
+bool startsWith(string str, string ch) {
+    int index = str.find(ch);
+    return (index == 0) ? true : false;
 }
 
 #endif
