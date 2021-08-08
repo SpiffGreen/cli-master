@@ -68,7 +68,7 @@ void Cli_Master::option(string flag, string description, string defaultValue) {
     advance(itr, 3);
     this->helpVector.insert(itr, flag + "\t" + description);
     int commaIndex = flag.find(",");
-    if(commaIndex == -1) throw "Flag should contain a short and long version";
+    if(commaIndex == -1) throw "Flag should contain a comma seperated list of short and long version";
     string shortStr = flag.substr(0, commaIndex);
     string longStr = flag.substr(commaIndex + 1);
     longStr = trim(longStr);
@@ -84,29 +84,43 @@ void Cli_Master::parse(int argc, char** argv) {
     }
     // perform main logic here
     for(int i = 1; i < argc; i++) {
-        string argument = *(argv + i);
+        string argument = argv[i];
+        // string argument = *(argv + i);
         int index = argument.find("=");
         if(index == -1) {
             /** No support for boolean based values yet */
-            // map<string, string>::iterator itr;
-            // for(itr = this->programLongOptions.begin(); itr != this->programLongOptions.end(); itr++) {
-            //     // println("Key: " + itr->first);
-            //     // println("Value: " + itr->second);
-            // }
         } else {
             string key = argument.substr(0, index);
             string value = argument.substr(index + 1);
             if(startsWith(key, "--")) {
                 // This means its a long flag
                 key = trim(key, '-');
-                map<string, string>::iterator m = this->programLongOptions.find(key);
-                // println(m->second); // Check if m exists before using it's value
-            } else {
+                try {
+                    map<string, string>::iterator m = this->programLongOptions.find(key);
+                    this->parsedFlags.insert(pair<string, string> (m->first, value));
+                }
+                catch(const std::exception& e) {
+                    this->printHelp();
+                    return;
+                }
+            } else if(startsWith(key, "-")) {
                 // perform operation for short flag
+                key = trim(key, '-');
+                try {
+                    map<string, string>::iterator m = this->programShortOptions.find(key);
+                    this->parsedFlags.insert(pair<string, string> (m->first, value));
+                }
+                catch(const std::exception& e) {
+                    this->printHelp();
+                    return;
+                }
+            } else {
+                this->printHelp();
+                return;
             }
-            this->parsedFlags.insert(pair<string, string> (trim(key, '-'), value));
         }
     }
+    return;
 }
 
 map<string, string> Cli_Master::opts() {
