@@ -7,7 +7,7 @@
 int main(int argc, char** argv) {
     Cli_Master program;
     program.description("This is the first version of the Cli_Master C++ library for building command line apps");
-    // program.version("v1.0.0");
+    program.version("v1.0.0");
     program.option("-f, --firstname", "your first name", "John");
     program.option("-l, --lastname", "your last name", "Doe");
     program.option("-a, --age", "to specify your age", "18");
