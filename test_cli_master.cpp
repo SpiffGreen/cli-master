@@ -3,18 +3,18 @@
  */
 
 #include "Cli_Master.h"
-#include <assert.h>
 
 int main(int argc, char** argv) {
-    Cli_Master passgen;
-    passgen.description("This is the first version of the Cli_Master C++ library for building command line apps");
-    passgen.version("v1.0.0");
-    passgen.option("-l, --length", "length of password", "8");
-    passgen.option("-s, --symbols", "should include symbol", "true");
-    passgen.option("-n, --numbers", "should include numbers", "true");
-    passgen.option("-c, --capitals", "should include capital letters", "true");
-    passgen.parse(argc, argv);
-    auto m = passgen.opts();
+    Cli_Master program;
+    program.description("This is the first version of the Cli_Master C++ library for building command line apps");
+    // program.version("v1.0.0");
+    program.option("-f, --firstname", "your first name", "John");
+    program.option("-l, --lastname", "your last name", "Doe");
+    program.option("-a, --age", "to specify your age", "18");
+    program.option("-g, --gender", "user's gender", "male");
+    program.option("-S, --save", "save generated details to file, details.txt", "true");
+    program.parse(argc, argv);
+    auto m = program.opts(); // Returns a map of the arguments with values. This map is used by the commandline-application.
     if(!m.empty()) {
         map<string, string>::iterator itr;
         for(itr = m.begin(); itr != m.end(); itr++) {
