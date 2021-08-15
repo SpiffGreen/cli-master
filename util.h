@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
+// using namespace std;
 
 // Declarations
 template <typename T>
@@ -13,32 +13,32 @@ void print(T);
 template <typename T>
 void println(T);
 
-string input(string);
-string trimLeft(string, char);
-string trimRight(string, char);
-string trim(string, char);
-bool startsWith(string, string);
+std::string input(std::string);
+std::string trimLeft(std::string, char);
+std::string trimRight(std::string, char);
+std::string trim(std::string, char);
+bool startsWith(std::string, std::string);
 
 
 // Definitions
 template <typename T>
 void print(T x) {
-    cout << x;
+    std::cout << x;
 }
 
 template <typename T>
 void println(T x) {
-    cout << x << endl;
+    std::cout << x << std::endl;
 }
 
-string input(string question) {
+std::string input(std::string question) {
     print(question);
-    string answer;
-    getline(cin, answer);
+    std::string answer;
+    getline(std::cin, answer);
     return answer;
 }
 
-string trimLeft(string str, char delimeter = ' ') {
+std::string trimLeft(std::string str, char delimeter = ' ') {
     int i;
     for(i = 0; i < str.size(); i++) {
         if(str[i] != delimeter) break;
@@ -46,7 +46,7 @@ string trimLeft(string str, char delimeter = ' ') {
     return str.substr(i);
 }
 
-string trimRight(string str, char delimeter = ' ') {
+std::string trimRight(std::string str, char delimeter = ' ') {
     int i;
     for(i = str.size() - 1; i >= 0; i--) {
         if(str[i] != delimeter) break;
@@ -54,11 +54,11 @@ string trimRight(string str, char delimeter = ' ') {
     return str.substr(0, i + 1);
 }
 
-string trim(string str, char delimeter = ' ') {
+std::string trim(std::string str, char delimeter = ' ') {
     return trimLeft(trimRight(str, delimeter), delimeter);
 }
 
-bool startsWith(string str, string ch) {
+bool startsWith(std::string str, std::string ch) {
     int index = str.find(ch);
     return (index == 0) ? true : false;
 }

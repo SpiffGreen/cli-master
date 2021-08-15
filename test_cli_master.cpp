@@ -2,10 +2,11 @@
  * A simple application to test the use of Cli_Master library
  */
 
-#include "Cli_Master.h"
-
+#include "climaster.h"
+#include <map>
+using namespace std;
 int main(int argc, char** argv) {
-    Cli_Master program;
+    CliMaster program;
     program.description("This is the first version of the Cli_Master C++ library for building command line apps");
     program.version("v1.0.0");
     program.option("-f, --firstname", "your first name", "John");

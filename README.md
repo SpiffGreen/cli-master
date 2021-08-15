@@ -4,10 +4,10 @@ A command line utility library that simplifies the development of command line a
 
 ### Installation
 Simply download and place the Cli_Master.h file in the c++ compiler include directory or in your project folder
-The file can be gotten [Here](./Cli_Master.h).
+The file can be gotten [Here](./climaster.h).
 
 ### Development
-This project was tested with a MinGW C++ compiler. Included in this repository is a build and run [script](./build_and_run.sh) to easy development.
+This project was tested with a MinGW C++ compiler. Included in this repository is a build and run [script](./build_and_run.sh) to ease development process.
 
 `How to use the build script`
 * Simple run the script but pass the name of the file without extension.
@@ -31,20 +31,23 @@ Cli-Master provides a class with some useful functions.
 
 ### Notes
 * Opts will return an empty map if parse is not called before it.
-* Boolean based flags will have a value of `'true'`
+* Boolean based flags will have a value of `'true'` in the opts map.
 
-### Exmaple
+### Example
+A simple command line program that expect two kinds of cli options `firstname` and `lastname`. If any other option is used the help menu is printed.
 ```c++
 #include "Cli_Master.h"
-
+#include <map>
+using namespace std;
 int main(int argc, char** argv) {
     Cli_Master program;
     program.description("This is the first version of the Cli_Master C++ library for building command line apps");
     program.version("v1.0.0");
     program.option("-f, --firstname", "your first name", "John");
     program.option("-l, --lastname", "your last name", "Doe");
+    program.option("-S, --save", "save generated details to file, details.txt", "true");
     program.parse(argc, argv);
-    auto m = program.opts(); // Returns a map of the arguments with values. This map is used by the commandline-application for processing.
+    auto m = program.opts(); // Returns a map of the arguments with values. This map is used by the commandline-application.
     if(!m.empty()) {
         map<string, string>::iterator itr;
         for(itr = m.begin(); itr != m.end(); itr++) {
@@ -54,6 +57,9 @@ int main(int argc, char** argv) {
     return 0;
 }
 ```
+
+### Author
+[Spiff Jekey-Green](https://github.com/SpiffGreen)
 
 ### License
 Cli-Master is [MIT](./LICENSE) licensed
