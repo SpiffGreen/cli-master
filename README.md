@@ -4,7 +4,7 @@ A command line utility library that simplifies the development of command line a
 
 ### Installation
 Simply download and place the Cli_Master.h file in the c++ compiler include directory or in your project folder
-The file can be gotten [Here](./climaster.h).
+The file can be gotten [Here](./climaster.h). The [climaster.h](./climaster.h) also requires a file for some simple function, [util.h](./util.h).
 
 ### Development
 This project was tested with a MinGW C++ compiler. Included in this repository is a build and run [script](./build_and_run.sh) to ease development process.
@@ -16,6 +16,10 @@ This project was tested with a MinGW C++ compiler. Included in this repository i
 $ ./build_and_run.sh main
 ```
 This will generate a main.exe file and run it. If an error occurs during the compile process the executable won't run.
+
+### Requirements
+This project was tested using a gcc compiler, target MinGW32.
+C++11.
 
 ### Documentation
 Cli-Master provides a class with some useful functions.
